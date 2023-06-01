@@ -1,0 +1,64 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+class MegaSena {
+    private List<Integer> listaNumeros;
+
+    public MegaSena() {
+        listaNumeros = new ArrayList<>();
+    }
+
+    public void sortearNumeros(int quantidade) {
+        Random random = new Random();
+        for (int i = 0; i < quantidade; i++) {
+            int numeroSorteado = random.nextInt(60) + 1;
+            listaNumeros.add(numeroSorteado);
+        }
+    }
+
+    public void encontrarSequenciaDireta(List<Integer> sequenciaSorteio) {
+        int sequenciaSize = sequenciaSorteio.size();
+        int sequenciaCount = 0;
+
+        for (int i = 0; i <= listaNumeros.size() - sequenciaSize; i++) {
+            List<Integer> subLista = listaNumeros.subList(i, i + sequenciaSize);
+            if (subLista.equals(sequenciaSorteio)) {
+                sequenciaCount++;
+                System.out.println("Sequência encontrada na posição " + i);
+            }
+        }
+
+        System.out.println("A sequência aparece " + sequenciaCount + " vez(es) na lista em ordem direta.");
+    }
+
+    public void encontrarSequenciaInversa(List<Integer> sequenciaSorteio) {
+        int sequenciaSize = sequenciaSorteio.size();
+        int sequenciaCount = 0;
+
+        for (int i = listaNumeros.size() - sequenciaSize; i >= 0; i--) {
+            List<Integer> subLista = listaNumeros.subList(i, i + sequenciaSize);
+            if (subLista.equals(sequenciaSorteio)) {
+                sequenciaCount++;
+                System.out.println("Sequência encontrada na posição " + i);
+            }
+        }
+
+        System.out.println("A sequência aparece " + sequenciaCount + " vez(es) na lista em ordem inversa.");
+    }
+}
+
+public class Sorteio {
+    public static void main(String[] args) {
+        MegaSena megaSena = new MegaSena();
+        megaSena.sortearNumeros(51000000);
+
+        List<Integer> sequenciaSorteio = List.of(1, 15, 16, 25, 32, 36);
+
+        System.out.println("Percorrendo a lista em ordem direta:");
+        megaSena.encontrarSequenciaDireta(sequenciaSorteio);
+
+        System.out.println("\nPercorrendo a lista em ordem inversa:");
+        megaSena.encontrarSequenciaInversa(sequenciaSorteio);
+    }
+}
